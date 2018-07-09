@@ -54,8 +54,16 @@
         .container {
             padding: 2px 16px;
         }
-        
-        
+        .cc{
+        	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+            width: 70%;
+            background: white;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            padding: 2px 16px;
+            }
+
     </style>
 
 </head>
@@ -78,7 +86,7 @@
         <a href="/contact/">Tweet</a>
     </li>
 </ul>
-      
+
 <ul id="tweets">
     <li>
             <div class="card">
@@ -102,35 +110,27 @@
                 </div>
             </div>
     </li>
-    
+
 </ul>
 <script>
     $(document).ready(function() {
-        //alert("this is working");
-        
+
+
         add_tweet();
+         add_tweet();
+          add_tweet();
+           add_tweet();
+            add_tweet();
+             add_tweet();
 
         function add_tweet(){
-            var l1 = $('<li></li>');
+        var username = "karan";
+        var tweet = "#main as jdhajasdghka jasdgjkv jaghsdjkb jasdghk jadgh jkasdlgh ajsdgh ";
+        var sentiment = "Positive";
 
-            var div1 = $('<div></div>');
-
-            var div2 = $('<div></div>');
-            div2.addClass("card");
-
-            var div3 = $("<div></div>");
-            div3.addClass("container");
-
-            var h1 = $("<h4></h4>");
-
-            var b = $("<b></b>").text("Chelsea");
-
-            var p = $("<p></p>").text("i am awesome");
-
-            var h2 = $("<h4></h4>").text("Sentiment of the tweet is : " + "Funny");
-
-            $("#tweets").append(l1).append(div1).append(div2).append(div3).append(h1).append(b).append(p).append(h2);
-            
+    	var $li = $("<li></li>");
+        var $newListItem = $("<div class = 'cc'><h4><b>"+username+"</b></h1><p>"+tweet+"</p><h4>"+sentiment+"</h4></div>");
+       $("#tweets").append($li).append($newListItem);
         }
 
     });
