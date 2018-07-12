@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
     <style>
         body{
@@ -64,6 +65,37 @@
             padding: 2px 16px;
             }
 
+            #tweet_input{
+                width : 70%;
+                height : 30%;
+                margin:1%;
+                margin-left:10%;
+                border-radius: 10px;
+            }
+            #handel_tweet , id01, tweet_input{
+                border-radius: 8px;
+            }
+            #id01{
+                border-radius: 8px;
+                
+            }
+            #tweet_click{
+                background:#009688;
+                border-radius: 8px;
+                float: right;
+
+            }
+            #tweet_pop_up_background{
+                background: #B2DFDB;
+            }
+            #header{
+                text-align: center;
+            }
+            #pop_up{
+                max-width: 500px;
+                border-radius: 10px;
+            }
+
     </style>
 
 </head>
@@ -83,56 +115,72 @@
         <a href="/clients/">Messages</a>
     </li>
     <li>
-        <a href="/contact/">Tweet</a>
+        <a href="#" id="handel_tweet" onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green" >Tweet</a>
     </li>
 </ul>
 
 <ul id="tweets">
-    <li>
-            <div class="card">
-                <div class="container">
-                    <h4>
-                        <b>John Doe</b>
-                    </h4>
-                    <p>#Money-making ideas: These 10 #stocks can deliver solid gains over next 3 weeks</p>
-                    <h4>Sentiment of the tweet is : serious</h4>
-                </div>
-        </div>
-    </li>
-    <li>
-        <div class="card">
-                <div class="container">
-                    <h4>
-                        <b>Awenonomus</b>
-                    </h4>
-                    <p>#Hacking I am a superb hacker #awesome</p>
-                    <h4>Sentiment of the tweet is : Funny</h4>
-                </div>
-            </div>
-    </li>
-
+   
 </ul>
+
+<div id="id01" class="w3-modal w3-round-large">
+    <div class="w3-modal-content w3-animate-top w3-round-large" id="pop_up">
+        <header class="w3-container w3-white w3-round-xlarge" id="header">
+            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright w3-round-xlarge">&times;</span>
+            <h2>Compose New Tweet</h2>
+        </header>
+        <div class="w3-container" id="tweet_pop_up_background">
+            <textarea id="tweet_input" name="text" rows="14" cols="10" wrap="soft"></textarea >
+      </div>
+      <footer class="w3-container w3-white w3-round-xlarge">
+        <button id="tweet_click">Tweet</button>
+      </footer>
+    </div>
+  </div>
+
 <script>
     $(document).ready(function() {
-
-
-        add_tweet();
-         add_tweet();
-          add_tweet();
-           add_tweet();
-            add_tweet();
-             add_tweet();
-
-        function add_tweet(){
-        var username = "karan";
         var tweet = "#main as jdhajasdghka jasdgjkv jaghsdjkb jasdghk jadgh jkasdlgh ajsdgh ";
+        add_tweet(tweet);
+        
+        function add_tweet(tweet){
+        var username = "karan";
         var sentiment = "Positive";
 
     	var $li = $("<li></li>");
         var $newListItem = $("<div class = 'cc'><h4><b>"+username+"</b></h1><p>"+tweet+"</p><h4>"+sentiment+"</h4></div>");
-       $("#tweets").append($li).append($newListItem);
+        $("#tweets").append($li).append($newListItem);
+        
+        $("#tweet_click").click(function(){
+            let value = $("#tweet_input").val();
+            $("#tweet_input").val('');
+            $("#id01").css("display", "none");
+            if(value!=""){
+                alert("we are calling the method");
+                //lets predict by sending the data to python api
+                //and then we will get the responce
+               
+                $.ajax({
+                    data: JSON.stringify({ value }),
+                    type: 'POST',
+                    url: '/predict',
+                    contentType: 'application/json;charset=UTF-8',
+                }).done(function (response) {
+                    if (response.error) {
+                        alert("the error occured");
+                    }
+                    else {
+                        alert("the success occured" + response.name);
+                    }
+                });
+
+                add_tweet(value);
+            }
+        });
+        
         }
 
+     
     });
 </script>
 </body>
