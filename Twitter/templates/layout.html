@@ -141,12 +141,11 @@
 <script>
     $(document).ready(function() {
         var tweet = "#main as jdhajasdghka jasdgjkv jaghsdjkb jasdghk jadgh jkasdlgh ajsdgh ";
-        add_tweet(tweet);
-        
-        function add_tweet(tweet){
-        var username = "karan";
         var sentiment = "Positive";
-
+        add_tweet(tweet,sentiment);
+        
+        function add_tweet(tweet,sentiment){
+        var username = "karan";
     	var $li = $("<li></li>");
         var $newListItem = $("<div class = 'cc'><h4><b>"+username+"</b></h1><p>"+tweet+"</p><h4>"+sentiment+"</h4></div>");
         $("#tweets").append($li).append($newListItem);
@@ -171,10 +170,12 @@
                     }
                     else {
                         alert("the success occured" + response.name);
+                        sentiment =  response.name
+                        add_tweet(value,sentiment);
                     }
                 });
 
-                add_tweet(value);
+                
             }
         });
         
