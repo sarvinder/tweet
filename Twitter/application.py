@@ -12,9 +12,13 @@ def login():
 @app.route('/predict',methods=['POST', 'GET'])
 def predict():
     if request.method=='POST':
-        print('inside the post method')
-        a = request.request.args.get('x')
-        print('got the data')
-    else:
-        print('the method was not called with pos')
-    return jsonify(result="positive")
+        data = request.get_json()
+        if(data !=None):
+            ##here we have to make a call to cognitive api for the sentiment analysis
+            ##thankgod it finally worked
+            return jsonify({'name':"Positive"})
+    return jsonify({'error','error occured'})
+
+
+if __name__ == "__main__":
+    app.run(debug=True)

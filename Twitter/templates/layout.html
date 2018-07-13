@@ -152,22 +152,27 @@
         $("#tweets").append($li).append($newListItem);
         
         $("#tweet_click").click(function(){
-            var value = $("#tweet_input").val();
+            let value = $("#tweet_input").val();
             $("#tweet_input").val('');
             $("#id01").css("display", "none");
             if(value!=""){
                 alert("we are calling the method");
                 //lets predict by sending the data to python api
                 //and then we will get the responce
-               $.ajax({
-                    url: 'predict',
+               
+                $.ajax({
+                    data: JSON.stringify({ value }),
                     type: 'POST',
-                    data: {x:value},
-                    success: function (response) {
-                        $('#main').text(response)
+                    url: '/predict',
+                    contentType: 'application/json;charset=UTF-8',
+                }).done(function (response) {
+                    if (response.error) {
+                        alert("the error occured");
                     }
-
-                })
+                    else {
+                        alert("the success occured" + response.name);
+                    }
+                });
 
                 add_tweet(value);
             }
