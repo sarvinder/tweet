@@ -49,7 +49,7 @@ def predict_the_text(text):
     if score >0.5:
         return 'positive'
     else:
-        return 'negative'
+        return 'Negative'
 
 
 

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
+   
     <style>
         body{
             font-family: "Segoe UI",Arial,sans-serif;
@@ -96,6 +96,139 @@
                 border-radius: 10px;
             }
 
+       .sk-folding-cube {
+            margin: 120px auto;
+            width: 40px;
+            height: 40px;
+            display:none;
+            position: relative;
+            -webkit-transform: rotateZ(45deg);
+                    transform: rotateZ(45deg);
+            }
+
+            .sk-folding-cube .sk-cube {
+            float: left;
+            width: 50%;
+            height: 50%;
+            position: relative;
+            -webkit-transform: scale(1.1);
+                -ms-transform: scale(1.1);
+                    transform: scale(1.1); 
+            }
+            .sk-folding-cube .sk-cube:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #333;
+            -webkit-animation: sk-foldCubeAngle 2.4s infinite linear both;
+                    animation: sk-foldCubeAngle 2.4s infinite linear both;
+            -webkit-transform-origin: 100% 100%;
+                -ms-transform-origin: 100% 100%;
+                    transform-origin: 100% 100%;
+            }
+            .sk-folding-cube .sk-cube2 {
+            -webkit-transform: scale(1.1) rotateZ(90deg);
+                    transform: scale(1.1) rotateZ(90deg);
+            }
+            .sk-folding-cube .sk-cube3 {
+            -webkit-transform: scale(1.1) rotateZ(180deg);
+                    transform: scale(1.1) rotateZ(180deg);
+            }
+            .sk-folding-cube .sk-cube4 {
+            -webkit-transform: scale(1.1) rotateZ(270deg);
+                    transform: scale(1.1) rotateZ(270deg);
+            }
+            .sk-folding-cube .sk-cube2:before {
+            -webkit-animation-delay: 0.3s;
+                    animation-delay: 0.3s;
+            }
+            .sk-folding-cube .sk-cube3:before {
+            -webkit-animation-delay: 0.6s;
+                    animation-delay: 0.6s; 
+            }
+            .sk-folding-cube .sk-cube4:before {
+            -webkit-animation-delay: 0.9s;
+                    animation-delay: 0.9s;
+            }
+            @-webkit-keyframes sk-foldCubeAngle {
+            0%, 10% {
+                -webkit-transform: perspective(140px) rotateX(-180deg);
+                        transform: perspective(140px) rotateX(-180deg);
+                opacity: 0; 
+            } 25%, 75% {
+                -webkit-transform: perspective(140px) rotateX(0deg);
+                        transform: perspective(140px) rotateX(0deg);
+                opacity: 1; 
+            } 90%, 100% {
+                -webkit-transform: perspective(140px) rotateY(180deg);
+                        transform: perspective(140px) rotateY(180deg);
+                opacity: 0; 
+            } 
+            }
+
+            @keyframes sk-foldCubeAngle {
+            0%, 10% {
+                -webkit-transform: perspective(140px) rotateX(-180deg);
+                        transform: perspective(140px) rotateX(-180deg);
+                opacity: 0; 
+            } 25%, 75% {
+                -webkit-transform: perspective(140px) rotateX(0deg);
+                        transform: perspective(140px) rotateX(0deg);
+                opacity: 1; 
+            } 90%, 100% {
+                -webkit-transform: perspective(140px) rotateY(180deg);
+                        transform: perspective(140px) rotateY(180deg);
+                opacity: 0; 
+            }
+            }
+        #overlay {
+            position: fixed;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2;
+            cursor: pointer;
+        }
+        #success{
+            
+            background-color:#6089D5;
+            color:#fff;
+            
+        }
+        #warning{
+            
+            background-color:#6089D5;
+            color:#fff;
+        }
+        #info{
+            
+            background-color:#6089D5;
+            color:#fff;
+        }
+        #footer {
+            position: relative;
+            min-height: 400px;
+            margin: 30px auto;
+            
+        }
+        #success,#warning,#info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin-left: 50px;
+            padding:20px;
+            border-radius: 9px;
+            opacity:0;
+        }
+
     </style>
 
 </head>
@@ -137,13 +270,84 @@
       </footer>
     </div>
   </div>
+<div id="overlay" onclick="off()"></div>
+<div class="sk-folding-cube" id="loading">
+    <div class="sk-cube1 sk-cube"></div>
+    <div class="sk-cube2 sk-cube"></div>
+    <div class="sk-cube4 sk-cube"></div>
+    <div class="sk-cube3 sk-cube"></div>
+</div>
+<div id="footer">
+<div id="success">
+    <strong>Success!</strong> This alert box could indicate a successful or positive action.
+</div>
+<div id="info">
+    <strong>Info!</strong> This alert box could indicate a neutral informative change or action.
+</div>
+<div id="warning">
+    <strong>Warning!</strong> This alert box could indicate a warning that might need attention.
+</div>
 
+</div>
 <script>
     $(document).ready(function() {
+        
         var tweet = "#main as jdhajasdghka jasdgjkv jaghsdjkb jasdghk jadgh jkasdlgh ajsdgh ";
         var sentiment = "Positive";
         add_tweet(tweet,sentiment);
+        //display_loading();
+        animatie_alert_in('warning');
         
+        setTimeout(() => {
+            animate_alert_out('warning');
+        }, 3000);   
+
+        
+        function display_loading(){
+                $("#overlay").show();
+            $("#loading").show();
+        }
+        function hide_loading(){
+                $("#overlay").hide();
+                $("#loading").hide();
+        }
+
+        function animatie_alert_in(alert_type){
+            if(alert_type === 'success'){
+                $("#success").animate({ bottom: '40px', opacity: '0.9' }, "slow");
+    
+            }
+            else if(alert_type === 'info'){
+                $("#info").animate({ bottom: '40px', opacity: '0.9' }, "slow");
+    
+            }
+            else if(alert_type === 'warning'){
+                $("#warning").animate({ bottom: '40px', opacity: '0.9' }, "slow");
+    
+            }
+            else{
+                alert("not matching");
+            }
+        }
+        function animate_alert_out(alerttype){
+            if (alert_type === 'success') {
+                $("#success").animate({ top: '20px', opacity: '0' }, "slow");
+
+            }
+            else if (alert_type === 'info') {
+                $("#info").animate({ top: '20px', opacity: '0' }, "slow");
+
+            }
+            else if (alert_type === 'warning') {
+                $("#warning").animate({ top: '20px', opacity: '0' }, "slow");
+
+            }
+            else {
+                alert("not matching");
+            }
+        }
+
+
         function add_tweet(tweet,sentiment){
         var username = "karan";
     	var $li = $("<li></li>");
@@ -151,14 +355,15 @@
         $("#tweets").append($li).append($newListItem);
         
         $("#tweet_click").click(function(){
+            display_loading();
             let value = $("#tweet_input").val();
             $("#tweet_input").val('');
             $("#id01").css("display", "none");
             if(value!=""){
-                alert("we are calling the method");
+                
                 //lets predict by sending the data to python api
                 //and then we will get the responce
-               
+                
                 $.ajax({
                     data: JSON.stringify({ value }),
                     type: 'POST',
@@ -167,15 +372,20 @@
                 }).done(function (response) {
                     if (response.error) {
                         alert("the error occured");
+                        hide_loading();
                     }
                     else {
-                        alert("the success occured" + response.name);
+                        hide_loading();
                         sentiment =  response.name
                         add_tweet(value,sentiment);
                     }
                 });
 
                 
+            }
+            else{
+                hide_loading();
+                alert("Please add the tweet to post...!!!");
             }
         });
         
